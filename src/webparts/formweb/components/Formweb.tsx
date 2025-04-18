@@ -11,7 +11,8 @@ interface varunState {
   FirstName: any;
   LastName: any;
   Mobile:any; 
-  Email:any; 
+  Email:any;
+  userObj: {}, 
   SubmitButton: any;
   CancelButton: any;
   submitdata: boolean;
@@ -19,6 +20,8 @@ interface varunState {
 }
 
 export default class Formweb extends React.Component<IFormwebProps, varunState> {
+
+  public arrObj: any = [];
 
   constructor(props: IFormwebProps) {
     super(props);
@@ -28,13 +31,17 @@ export default class Formweb extends React.Component<IFormwebProps, varunState> 
       FirstName: "",
       LastName: "",
       Mobile:"",
-      Email:"", 
+      Email:"",
+      userObj: {}, 
       SubmitButton: "",
       CancelButton: "",
       submitdata: false,
       // User: ""
     }
-    this.fetchcontext();
+    // this.fetchcontext();
+    this.submitButton = this.submitButton.bind(this);
+
+    this.arrObj = [];
   }
   fetchcontext = () => {
 
@@ -105,8 +112,14 @@ export default class Formweb extends React.Component<IFormwebProps, varunState> 
   }
 
   submitButton = () => {
+
+    let obj: any = { fname: this.state.FirstName, lname:this.state.LastName, mobile: this.state.Mobile, email: this.state.Email }
+
+    this.arrObj.push(obj)
+
     this.setState({
-      submitdata: true
+      submitdata: true,
+      userObj: this.arrObj
     })
 
   }
@@ -118,6 +131,7 @@ export default class Formweb extends React.Component<IFormwebProps, varunState> 
       LastName: "",
       Mobile: "",
       Email: "",
+      userObj: {},
       submitdata: false
     })
   }
@@ -142,7 +156,7 @@ export default class Formweb extends React.Component<IFormwebProps, varunState> 
         {/* <TextField label="LastName" onChange={this.LastName} value={this.state.LastName} /> */}
         <DefaultButton text="SubmitButton" onClick={this.submitButton} />
         <PrimaryButton text="CancelButton" onClick={this.CancelButton} />
-        {this.state.submitdata ? <FormDisplay context={this.props.context} submitData={this.state.submitdata} firstname={this.state.FirstName} lastName={this.state.LastName} mobile={this.state.Mobile} email={this.state.Email} /> : <></>}
+        {this.state.submitdata ? <FormDisplay context={this.props.context} submitData={this.state.submitdata} userObj={this.state.userObj} /> : <></>}
         {/* <FormDisplay context={this.props.context} submitData={false}  */}
         {/* <div>
           {this.state.submitdata ?

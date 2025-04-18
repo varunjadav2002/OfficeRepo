@@ -18,10 +18,10 @@ export default class FormDisplay extends React.Component<IFormDisplayProps> {
     return (
       <>
         <h2>Display Form</h2>
-        <h4>{this.props.firstname}</h4>
-        <h4>{this.props.lastName}</h4>
-        <h4>{this.props.mobile}</h4>
-        <h4>{this.props.email}</h4>
+        {this.props.userObj.map((val:any) => {
+          return <><p>{val.fname}</p><p>{val.lname}</p><p>{val.mobile}</p><p>{val.email}</p></>
+        })}
+        
       </>
     );
   }
